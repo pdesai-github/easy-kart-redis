@@ -1,0 +1,33 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+- stage: Deploy
+  displayName: Deploy to AKS
+  dependsOn: Build
+  jobs:
+  - job: DeployToAKS
+    displayName: Deploy to AKS
+    steps:  
+    - task: Kubernetes@1
+      displayName: Apply deployment.yaml
+      inputs:
+        kubernetesServiceEndpoint: 'aks-service-conn'
+        namespace: 'easy-kart'
+        command: 'apply'
+        arguments: '-f redis-deployment.yaml'
+    - task: Kubernetes@1
+      displayName: Apply service.yaml
+      inputs:
+        kubernetesServiceEndpoint: 'aks-service-conn'
+        namespace: 'easy-kart'
+        command: 'apply'
+        arguments: '-f redis-service.yaml'
