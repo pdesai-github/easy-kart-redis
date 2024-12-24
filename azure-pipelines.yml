@@ -12,7 +12,6 @@ pool:
 stages:
 - stage: Deploy
   displayName: Deploy to AKS
-  dependsOn: Build
   jobs:
   - job: DeployToAKS
     displayName: Deploy to AKS
