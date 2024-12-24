@@ -23,6 +23,6 @@ spec:
             - name: REDIS_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: easy-kart-redis-secret
-                  key: password
+                  name: easy-kart-secret
+                  key: redispassword
           args: ["--requirepass", "$(REDIS_PASSWORD)"]
